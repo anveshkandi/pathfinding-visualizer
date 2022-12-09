@@ -1,0 +1,23 @@
+footer {
+	/* border: 1px solid red; */
+	font-family: "Poiret One";
+	color: rgb(255, 255, 255);
+	bottom: 0;
+	right: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: auto;
+	gap: 5px;
+	height: 5vh;
+}
+
+footer a {
+	color: rgb(255, 255, 255);
+	text-decoration: none;
+}
+
+footer a:hover {
+	cursor: pointer;
+}

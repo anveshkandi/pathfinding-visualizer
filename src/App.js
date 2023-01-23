@@ -1,14 +1,12 @@
 import React from 'react';
 // import classes from './App.module.css';
-import Options from './UI/Options';
 import Footer from './UI/Footer';
-import Grid from './UI/Grid';
+import PathfindingVisualizer from './PathfindingVisualizer/PathfindingVisualizer';
 
 function App() {
     return (
         <React.Fragment>
-            <Options />
-            <Grid />
+            <PathfindingVisualizer />
             <Footer />
         </React.Fragment>
     );

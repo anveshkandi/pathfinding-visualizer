@@ -1,0 +1,60 @@
+.tile {
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    background: rgb(212, 235, 235);
+}
+
+.start-tile {
+    background: red;
+}
+
+.finish-tile {
+    background: green;
+}
+
+.wall {
+    background: rgb(43, 43, 43);
+}
+
+.visited {
+    animation-name: visitedAnimation;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes visitedAnimation {
+    0% {
+        background-color: rgb(255, 0, 0);
+    }
+
+    100% {
+        background-color: rgb(70, 187, 216);
+    }
+}
+
+.shortest-path {
+    animation-name: pathAnimation;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes pathAnimation {
+    0% {
+        background-color: rgb(251, 255, 0);
+    }
+
+    100% {
+        background-color: green;
+    }
+}

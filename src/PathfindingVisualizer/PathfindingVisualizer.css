@@ -1,0 +1,44 @@
+.test {
+    height: 80vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dijkstraBtn {
+    width: 150px;
+}
+
+.aStarBtn {
+    width: 150px;
+}
+
+.clrBtn {
+    width: 150px;
+}
+
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+    height: 10vh;
+    width: 95%;
+    gap: 10px;
+}
+
+.title {
+    font-family: 'Poiret One', cursive;
+    font-size: 40px;
+    letter-spacing: 4px;
+    margin-right: auto;
+}

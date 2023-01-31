@@ -3,13 +3,15 @@ import Tile from './Tile';
 import { animateDijkstra } from '../Algorithms/Dijkstra';
 import { animateAStar } from '../Algorithms/Astar';
 
-const START_NODE_ROW = 6;
-const START_NODE_COL = 6;
-const FINISH_NODE_ROW = 18;
-const FINISH_NODE_COL = 7;
-
 const Grid = () => {
     let grid = [];
+    let mouseIsPressed = false;
+    let movingStart = false;
+    let movingFinish = false;
+    let START_NODE_ROW = 6;
+    let START_NODE_COL = 6;
+    let FINISH_NODE_ROW = 18;
+    let FINISH_NODE_COL = 7;
 
     const createTile = (col, row) => {
         return {
@@ -83,6 +85,62 @@ const Grid = () => {
         }
     };
 
+    const clrPathHandler = () => {
+        for (const row of grid) {
+            for (const node of row) {
+                node.f = 0;
+                node.g = 0;
+                node.f = 0;
+                node.distance = Infinity;
+                node.isVisited = false;
+                node.previousNode = null;
+
+                let nodeID = document.getElementById(
+                    `node-${node.col}-${node.row}`
+                );
+                if (nodeID.classList.contains('visited'))
+                    nodeID.classList.remove('visited');
+                if (nodeID.classList.contains('shortest-path'))
+                    nodeID.classList.remove('shortest-path');
+            }
+        }
+    };
+
+    const onMouseDownHandler = (e) => {
+        mouseIsPressed = true;
+        let coordinates = e.target.id.split('-');
+        let xCoord = coordinates[1];
+        let yCoord = coordinates[2];
+        if (document.getElementById(e.target.id).classList.contains('wall')) {
+            document.getElementById(e.target.id).classList.remove('wall');
+            grid[yCoord][xCoord].isWall = false;
+        } else {
+            document.getElementById(e.target.id).classList.add('wall');
+            grid[yCoord][xCoord].isWall = true;
+        }
+    };
+
+    const onMouseEnterHandler = (e) => {
+        if (mouseIsPressed) {
+            let coordinates = e.target.id.split('-');
+            let xCoord = coordinates[1];
+            let yCoord = coordinates[2];
+            if (
+                document.getElementById(e.target.id).classList.contains('wall')
+            ) {
+                document.getElementById(e.target.id).classList.remove('wall');
+                grid[yCoord][xCoord].isWall = false;
+            } else {
+                document.getElementById(e.target.id).classList.add('wall');
+                grid[yCoord][xCoord].isWall = true;
+            }
+        }
+    };
+
+    const onMouseUpHandler = () => {
+        mouseIsPressed = false;
+    };
+
     return (
         <div className="container">
             <div className="main-header">
@@ -96,11 +154,14 @@ const Grid = () => {
                 <button className="clrBtn" onClick={clrButtonHandler}>
                     Clear
                 </button>
+                <button className="clrPathBtn" onClick={clrPathHandler}>
+                    Clear Path
+                </button>
             </div>
-            <div className="test" id="grid">
+            <div className="test" id="grid" draggable="false">
                 {grid.map((row, rowIdx) => {
                     return (
-                        <div key={rowIdx}>
+                        <div key={rowIdx} draggable="false">
                             {row.map((tile, tileIdx) => {
                                 const { row, col, isFinish, isStart, isWall } =
                                     tile;
@@ -112,6 +173,9 @@ const Grid = () => {
                                         isFinish={isFinish}
                                         isStart={isStart}
                                         isWall={isWall}
+                                        onMouseDown={onMouseDownHandler}
+                                        onMouseEnter={onMouseEnterHandler}
+                                        onMouseUp={onMouseUpHandler}
                                     />
                                 );
                             })}

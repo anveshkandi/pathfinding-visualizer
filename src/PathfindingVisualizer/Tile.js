@@ -1,12 +1,5 @@
 import './Tile.css';
-import { useState } from 'react';
 const Tile = (props) => {
-    const [isWall, setIsWall] = useState(false);
-    const onClickHandler = (e) => {
-        setIsWall(!isWall);
-        console.log(e);
-    };
-
     const extraClassName = props.isStart
         ? 'start-tile'
         : props.isFinish
@@ -18,10 +11,11 @@ const Tile = (props) => {
     return (
         <div
             id={`node-${props.col}-${props.row}`}
-            className={`tile ${extraClassName} ${isWall ? 'wall' : ''}`}
+            className={`tile ${extraClassName}`}
             onMouseDown={props.onMouseDown}
             onMouseUp={props.onMouseUp}
             onMouseEnter={props.onMouseEnter}
+            onMouseLeave={props.onMouseLeave}
             draggable="false"
         ></div>
     );

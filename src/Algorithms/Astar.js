@@ -110,7 +110,7 @@ export function animateAStar(
                         .getElementById(`node-${pathNode.col}-${pathNode.row}`)
                         .classList.add('shortest-path');
                 }
-            }, 10 * i);
+            }, 25 * i);
             return;
         }
 
@@ -121,6 +121,6 @@ export function animateAStar(
                     .getElementById(`node-${node.col}-${node.row}`)
                     .classList.add('visited');
             }
-        }, 10 * i);
+        }, 25 * i);
     }
 }

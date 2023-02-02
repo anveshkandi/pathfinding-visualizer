@@ -84,7 +84,7 @@ export function animateDijkstra(
                             .classList.add('shortest-path');
                     }
                 }
-            }, 10 * i);
+            }, 25 * i);
             return;
         }
 
@@ -95,6 +95,6 @@ export function animateDijkstra(
                     .getElementById(`node-${node.col}-${node.row}`)
                     .classList.add('visited');
             }
-        }, 10 * i);
+        }, 25 * i);
     }
 }

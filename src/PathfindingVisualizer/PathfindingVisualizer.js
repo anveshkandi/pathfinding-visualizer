@@ -107,39 +107,80 @@ const Grid = () => {
     };
 
     const onMouseDownHandler = (e) => {
+        let tileID = e.target.id;
         mouseIsPressed = true;
-        let coordinates = e.target.id.split('-');
-        let xCoord = coordinates[1];
-        let yCoord = coordinates[2];
-        if (document.getElementById(e.target.id).classList.contains('wall')) {
-            document.getElementById(e.target.id).classList.remove('wall');
-            grid[yCoord][xCoord].isWall = false;
-        } else {
-            document.getElementById(e.target.id).classList.add('wall');
-            grid[yCoord][xCoord].isWall = true;
+        toggleWall(tileID);
+        if (document.getElementById(tileID).classList.contains('start-tile')) {
+            movingStart = true;
+        }
+        if (document.getElementById(tileID).classList.contains('finish-tile')) {
+            movingFinish = true;
         }
     };
 
     const onMouseEnterHandler = (e) => {
-        if (mouseIsPressed) {
-            let coordinates = e.target.id.split('-');
-            let xCoord = coordinates[1];
-            let yCoord = coordinates[2];
-            if (
-                document.getElementById(e.target.id).classList.contains('wall')
-            ) {
-                document.getElementById(e.target.id).classList.remove('wall');
-                grid[yCoord][xCoord].isWall = false;
-            } else {
-                document.getElementById(e.target.id).classList.add('wall');
-                grid[yCoord][xCoord].isWall = true;
-            }
+        let tileID = e.target.id;
+        let tile = document.getElementById(tileID);
+        let coordinates = tileID.split('-');
+        let xCoord = coordinates[1];
+        let yCoord = coordinates[2];
+
+        if (mouseIsPressed && !movingStart && !movingFinish) {
+            toggleWall(tileID);
+        }
+
+        if (movingStart) {
+            tile.classList.add('start-tile');
+            START_NODE_ROW = yCoord;
+            START_NODE_COL = xCoord;
+        }
+
+        if (movingFinish) {
+            tile.classList.add('finish-tile');
+            FINISH_NODE_ROW = yCoord;
+            FINISH_NODE_COL = xCoord;
+        }
+    };
+
+    const onMouseLeaveHandler = (e) => {
+        let tileID = e.target.id;
+        let tile = document.getElementById(tileID);
+
+        if (movingStart) {
+            tile.classList.remove('start-tile');
+        }
+        if (movingFinish) {
+            tile.classList.remove('finish-tile');
         }
     };
 
     const onMouseUpHandler = () => {
         mouseIsPressed = false;
+        movingStart = false;
+        movingFinish = false;
     };
+
+    function toggleWall(tileID) {
+        let tile = document.getElementById(tileID);
+        let coordinates = tileID.split('-');
+        let xCoord = coordinates[1];
+        let yCoord = coordinates[2];
+        if (
+            tile.classList.contains('wall') &&
+            !tile.classList.contains('start-tile') &&
+            !tile.classList.contains('finish-tile')
+        ) {
+            document.getElementById(tileID).classList.remove('wall');
+            grid[yCoord][xCoord].isWall = false;
+        }
+        if (
+            !tile.classList.contains('start-tile') &&
+            !tile.classList.contains('finish-tile')
+        ) {
+            document.getElementById(tileID).classList.add('wall');
+            grid[yCoord][xCoord].isWall = true;
+        }
+    }
 
     return (
         <div className="container">
@@ -158,7 +199,12 @@ const Grid = () => {
                     Clear Path
                 </button>
             </div>
-            <div className="test" id="grid" draggable="false">
+            <div
+                className="test"
+                id="grid"
+                draggable="false"
+                onMouseLeave={onMouseUpHandler}
+            >
                 {grid.map((row, rowIdx) => {
                     return (
                         <div key={rowIdx} draggable="false">
@@ -176,6 +222,7 @@ const Grid = () => {
                                         onMouseDown={onMouseDownHandler}
                                         onMouseEnter={onMouseEnterHandler}
                                         onMouseUp={onMouseUpHandler}
+                                        onMouseLeave={onMouseLeaveHandler}
                                     />
                                 );
                             })}

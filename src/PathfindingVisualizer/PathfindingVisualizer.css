@@ -14,16 +14,23 @@
     align-items: center;
 }
 
-.dijkstraBtn {
-    width: 150px;
+button {
+    font-family: 'Poiret One';
+    font-size: 16px;
+    letter-spacing: 2px;
+    height: 50px;
+    width: 200px;
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    font-weight: 900;
+    transition: 150ms;
 }
 
-.aStarBtn {
-    width: 150px;
-}
-
-.clrBtn {
-    width: 150px;
+button:hover {
+    background-color: #00ffff;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
 }
 
 .main-header {
